@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Text;
 using WC_FizzBuzz.Library;
 
 namespace Tests
@@ -12,79 +13,57 @@ namespace Tests
         }
 
         [Test]
-        public void BasicTest()
+        public void FizzBuzz_OneToFifteen_BasicDivisibleCheck()
         {
-            var game = FizzBuzzBuilder.Create().WithDivisibleCheckFor(3, "Fizz").WithDivisibleCheckFor(5, "Buzz").Build();
+            var game = FizzBuzzBuilder.Create(1, 15).WithDivisibleCheckFor(3, "Fizz").WithDivisibleCheckFor(5, "Buzz").Build();
+            var sb = new StringBuilder();
+            sb.AppendLine("1");
+            sb.AppendLine("2");
+            sb.AppendLine("Fizz (3)");
+            sb.AppendLine("4");
+            sb.AppendLine("Buzz (5)");
+            sb.AppendLine("Fizz (6)");
+            sb.AppendLine("7");
+            sb.AppendLine("8");
+            sb.AppendLine("Fizz (9)");
+            sb.AppendLine("Buzz (10)");
+            sb.AppendLine("11");
+            sb.AppendLine("Fizz (12)");
+            sb.AppendLine("13");
+            sb.AppendLine("14");
+            sb.AppendLine("FizzBuzz (15)");
+            var expected = sb.ToString();
             game.SolveFizzBuzz();
-            Assert.Pass(game.LastResult);
+            
+            Assert.AreEqual(expected, game.LastResult);
         }
 
         [Test]
-        public void NegativeBasicTest()
+        public void FizzBuzz_ZeroToFifteen_BasicDivisibleCheck_ShouldPrintZeroProperly()
         {
-            var game = FizzBuzzBuilder.Create(-150, 150).WithDivisibleCheckFor(3, "Fizz").WithDivisibleCheckFor(5, "Buzz").Build();
+            var game = FizzBuzzBuilder.Create(0, 15).WithDivisibleCheckFor(3, "Fizz").WithDivisibleCheckFor(5, "Buzz").Build();
+            var sb = new StringBuilder();
+            sb.AppendLine("0");
+            sb.AppendLine("1");
+            sb.AppendLine("2");
+            sb.AppendLine("Fizz (3)");
+            sb.AppendLine("4");
+            sb.AppendLine("Buzz (5)");
+            sb.AppendLine("Fizz (6)");
+            sb.AppendLine("7");
+            sb.AppendLine("8");
+            sb.AppendLine("Fizz (9)");
+            sb.AppendLine("Buzz (10)");
+            sb.AppendLine("11");
+            sb.AppendLine("Fizz (12)");
+            sb.AppendLine("13");
+            sb.AppendLine("14");
+            sb.AppendLine("FizzBuzz (15)");
+            var expected = sb.ToString();
             game.SolveFizzBuzz();
-            Assert.Pass(game.LastResult);
+
+            Assert.AreEqual(expected, game.LastResult);
         }
 
-        [Test]
-        public void NegativeBonusTest()
-        {
-            var game = FizzBuzzBuilder.Create(-150, 150)
-                .WithDivisibleCheckFor(3, "Fizz")
-                .WithDivisibleCheckFor(5, "Buzz")
-                .WithDivisibleCheckFor(7, "Jazz")
-                .Build();
-            game.SolveFizzBuzz();
-            Assert.Pass(game.LastResult);
-        }
-
-        [Test]
-        public void ExtendedBonusTest()
-        {
-            var game = FizzBuzzBuilder.Create(-1000, 1000)
-                .WithDivisibleCheckFor(3, "Fizz")
-                .WithDivisibleCheckFor(5, "Buzz")
-                .WithDivisibleCheckFor(7, "Jazz")
-                .WithDivisibleCheckFor(11, "Razz")
-                .WithDivisibleCheckFor(13, "Guzz")
-                .Build();
-            game.SolveFizzBuzz();
-            Assert.Pass(game.LastResult);
-        }
-
-        [Test]
-        public void MassiveTest()
-        {
-            var game = FizzBuzzBuilder.Create(-920000, 920000)
-                .WithDivisibleCheckFor(3, "Fizz")
-                .WithDivisibleCheckFor(5, "Buzz")
-                .WithDivisibleCheckFor(7, "Jazz")
-                .WithDivisibleCheckFor(11, "Razz")
-                .WithDivisibleCheckFor(13, "Guzz")
-                .WithDivisibleCheckFor(17, "Wuzz")
-                .WithDivisibleCheckFor(19, "Mizz")
-                .WithDivisibleCheckFor(23, "Jizz")
-                .WithDivisibleCheckFor(29, "Shizz")
-                .WithFunctionCheckFor((n) => {
-                    if (n > -10 && n < 10)
-                        return false;
-                    var str = n.ToString();
-                    int b = 0, e = 0;
-                    for (int i = 0; i < str.Length; i++)
-                    {
-                        b = i;
-                        e = str.Length - 1 - i;
-                        if (b > e)
-                            return true;
-                        if (str[b] != str[e])
-                            return false;
-                    }
-                    return false;
-                }, "Quizz")
-                .Build();
-            game.SolveFizzBuzz();
-            Assert.Pass(game.LastResult);
-        }
     }
 }
